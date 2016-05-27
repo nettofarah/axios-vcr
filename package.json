@@ -1,0 +1,26 @@
+{
+  "name": "axios-vcr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "axios",
+    "vcr",
+    "test",
+    "mock",
+    "http"
+  ],
+  "author": "Netto Farah",
+  "license": "MIT",
+  "devDependencies": {
+    "axios": "^0.11.1"
+  },
+  "dependencies": {
+    "lodash": "^4.13.1",
+    "md5": "^2.1.0",
+    "mkdirp": "^0.5.1"
+  }
+}
