@@ -22,7 +22,7 @@ describe('Axios VCR', function() {
           var contents = JSON.parse(fs.readFileSync('./test/fixtures/cats.json'));
           assert.deepEqual(contents.data, response.data);
           done();
-        }).catch(function(err) { console.log(err) });
+        }).catch(function(err) { console.log(err); done(); });
       });
     });
 
@@ -33,18 +33,22 @@ describe('Axios VCR', function() {
           var contents = JSON.parse(fs.readFileSync(cassetePath));
           assert.deepEqual(contents.data, response.data);
           done();
-        }).catch(function(err) { console.log(err) });
+        }).catch(function(err) { console.log(err); done(); });
       });
     });
 
-    it('stores headers', function(done) {
+    it('stores headers and status', function(done) {
       var cassetePath = './test/fixtures/cats.json';
       VCR.useCassete(cassetePath, function () {
         axios.get(cats).then(function(response) {
           var contents = JSON.parse(fs.readFileSync(cassetePath));
+
           assert.deepEqual(contents.headers, response.headers);
+          assert.equal(contents.status, response.status);
+          assert.equal(contents.statusText, response.statusText);
+
           done();
-        }).catch(function(err) { console.log('fuu', err) });
+        }).catch(function(err) { console.log(err); done(); });
       });
     });
   });
