@@ -25,7 +25,7 @@ describe('Axios VCR', function() {
     afterEach(clearFixtures);
 
     it('generates stubs for requests', function(done) {
-      VCR.useCassete('./test/fixtures/cats.json', function () {
+      VCR.useCassette('./test/fixtures/cats.json', function () {
         axios.get(cats).then(function(response) {
           var contents = JSON.parse(fs.readFileSync('./test/fixtures/cats.json'));
           assert.deepEqual(contents.data, response.data);
@@ -35,10 +35,10 @@ describe('Axios VCR', function() {
     });
 
     it('works with nested folders', function(done) {
-      var cassetePath = './test/fixtures/reddit/r/cats.json';
-      VCR.useCassete(cassetePath, function () {
+      var cassettePath = './test/fixtures/reddit/r/cats.json';
+      VCR.useCassette(cassettePath, function () {
         axios.get(cats).then(function(response) {
-          var contents = JSON.parse(fs.readFileSync(cassetePath));
+          var contents = JSON.parse(fs.readFileSync(cassettePath));
           assert.deepEqual(contents.data, response.data);
           done();
         }).catch(function(err) { console.log(err); done(); });
@@ -46,10 +46,10 @@ describe('Axios VCR', function() {
     });
 
     it('stores headers and status', function(done) {
-      var cassetePath = './test/fixtures/cats.json';
-      VCR.useCassete(cassetePath, function () {
+      var cassettePath = './test/fixtures/cats.json';
+      VCR.useCassette(cassettePath, function () {
         axios.get(cats).then(function(response) {
-          var contents = JSON.parse(fs.readFileSync(cassetePath));
+          var contents = JSON.parse(fs.readFileSync(cassettePath));
 
           assert.deepEqual(contents.headers, response.headers);
           assert.equal(contents.status, response.status);
@@ -65,14 +65,14 @@ describe('Axios VCR', function() {
     /*
       This is a tricky test.
       I'm not aware of any way to check that a network request has been made.
-      So instead we hit an unexisting URL that is backed by a cassete. We can now
-      check that the response is the same as the cassete file.
+      So instead we hit an unexisting URL that is backed by a cassette. We can now
+      check that the response is the same as the cassette file.
     */
     it('skips remote calls', function(done) {
       var path = './test/static_fixtures/cats.json';
       assert(fileExists(path));
 
-      VCR.useCassete(path, function () {
+      VCR.useCassette(path, function () {
         axios.get('http://something.com/unexisting').then(function(response) {
           var contents = JSON.parse(fs.readFileSync(path));
           assert.deepEqual(response.data, contents.data);
@@ -81,13 +81,13 @@ describe('Axios VCR', function() {
       });
     });
 
-    it('makes remote call when a cassete is not available', function(done) {
+    it('makes remote call when a cassette is not available', function(done) {
       var path = './test/static_fixtures/no_cats.json';
 
       fs.unlinkSync(path);
       assert(!fileExists(path));
 
-      VCR.useCassete(path, function () {
+      VCR.useCassette(path, function () {
         axios.get(cats).then(function(response) {
           assert.equal(200, response.status);
           done();
