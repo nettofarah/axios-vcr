@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha test/"
   },
   "keywords": [
     "axios",
@@ -16,11 +16,11 @@
   "author": "Netto Farah",
   "license": "MIT",
   "devDependencies": {
-    "axios": "^0.11.1"
+    "axios": "^0.11.1",
+    "mocha": "^2.5.3",
+    "rimraf": "^2.5.2"
   },
   "dependencies": {
-    "lodash": "^4.13.1",
-    "md5": "^2.1.0",
     "mkdirp": "^0.5.1"
   }
 }
