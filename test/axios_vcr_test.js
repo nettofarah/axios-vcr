@@ -84,7 +84,10 @@ describe('Axios VCR', function() {
     it('makes remote call when a cassette is not available', function(done) {
       var path = './test/static_fixtures/no_cats.json';
 
-      fs.unlinkSync(path);
+      try {
+        fs.unlinkSync(path);
+      } catch(e) {}
+
       assert(!fileExists(path));
 
       VCR.useCassette(path, function () {
