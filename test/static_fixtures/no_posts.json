@@ -1,0 +1,26 @@
+{
+	"status": 200,
+	"statusText": "OK",
+	"headers": {
+		"server": "Cowboy",
+		"connection": "close",
+		"x-powered-by": "Express",
+		"vary": "Origin, Accept-Encoding",
+		"access-control-allow-credentials": "true",
+		"cache-control": "no-cache",
+		"pragma": "no-cache",
+		"expires": "-1",
+		"x-content-type-options": "nosniff",
+		"content-type": "application/json; charset=utf-8",
+		"content-length": "292",
+		"etag": "W/\"124-yv65LoT2uMHrpn06wNpAcQ\"",
+		"date": "Wed, 08 Jun 2016 06:46:18 GMT",
+		"via": "1.1 vegur"
+	},
+	"data": {
+		"userId": 1,
+		"id": 1,
+		"title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
+		"body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+	}
+}

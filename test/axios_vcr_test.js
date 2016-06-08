@@ -17,7 +17,7 @@ function fileExists(path) {
 
 describe('Axios VCR', function() {
   this.timeout(10000)
-  var cats = 'https://reddit.com/r/cats.json'
+  var posts = 'http://jsonplaceholder.typicode.com/posts/1'
   var axios = require('axios')
 
   describe('recording', function() {
@@ -25,9 +25,9 @@ describe('Axios VCR', function() {
     afterEach(clearFixtures)
 
     it('generates stubs for requests', function(done) {
-      VCR.useCassette('./test/fixtures/cats.json', function () {
-        axios.get(cats).then(function(response) {
-          var contents = JSON.parse(fs.readFileSync('./test/fixtures/cats.json'))
+      VCR.useCassette('./test/fixtures/posts.json', function () {
+        axios.get(posts).then(function(response) {
+          var contents = JSON.parse(fs.readFileSync('./test/fixtures/posts.json'))
           assert.deepEqual(contents.data, response.data)
           done()
         })
@@ -35,9 +35,9 @@ describe('Axios VCR', function() {
     })
 
     it('works with nested folders', function(done) {
-      var cassettePath = './test/fixtures/reddit/r/cats.json'
+      var cassettePath = './test/fixtures/reddit/r/posts.json'
       VCR.useCassette(cassettePath, function () {
-        axios.get(cats).then(function(response) {
+        axios.get(posts).then(function(response) {
           var contents = JSON.parse(fs.readFileSync(cassettePath))
           assert.deepEqual(contents.data, response.data)
           done()
@@ -46,9 +46,9 @@ describe('Axios VCR', function() {
     })
 
     it('stores headers and status', function(done) {
-      var cassettePath = './test/fixtures/cats.json'
+      var cassettePath = './test/fixtures/posts.json'
       VCR.useCassette(cassettePath, function () {
-        axios.get(cats).then(function(response) {
+        axios.get(posts).then(function(response) {
           var contents = JSON.parse(fs.readFileSync(cassettePath))
 
           assert.deepEqual(contents.headers, response.headers)
@@ -69,7 +69,7 @@ describe('Axios VCR', function() {
       check that the response is the same as the cassette file.
     */
     it('skips remote calls', function(done) {
-      var path = './test/static_fixtures/cats.json'
+      var path = './test/static_fixtures/posts.json'
       assert(fileExists(path))
 
       VCR.useCassette(path, function () {
@@ -77,12 +77,12 @@ describe('Axios VCR', function() {
           var contents = JSON.parse(fs.readFileSync(path))
           assert.deepEqual(response.data, contents.data)
           done()
-        })
+        }).catch(function(e) { console.error(e); done(); })
       })
     })
 
     it('makes remote call when a cassette is not available', function(done) {
-      var path = './test/static_fixtures/no_cats.json'
+      var path = './test/static_fixtures/no_posts.json'
 
       try {
         fs.unlinkSync(path)
@@ -91,7 +91,7 @@ describe('Axios VCR', function() {
       assert(!fileExists(path))
 
       VCR.useCassette(path, function () {
-        axios.get(cats).then(function(response) {
+        axios.get(posts).then(function(response) {
           assert.equal(200, response.status)
           done()
         })
