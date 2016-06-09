@@ -15,8 +15,16 @@ function fileExists(path) {
   }
 }
 
+function getContents(cassettePath, config) {
+  var loadAt = require('../lib/jsonDb').loadAt
+  var digest = require('../lib/digest')
+  var key = digest(config)
+
+  return loadAt(cassettePath, key)
+}
+
 describe('Axios VCR', function() {
-  this.timeout(10000)
+  this.timeout(5000)
   var posts = 'http://jsonplaceholder.typicode.com/posts/1'
   var axios = require('axios')
 
@@ -25,23 +33,26 @@ describe('Axios VCR', function() {
     afterEach(clearFixtures)
 
     it('generates stubs for requests', function(done) {
-      VCR.useCassette('./test/fixtures/posts.json', function () {
+      var path = './test/fixtures/posts.json'
+      VCR.useCassette(path, function () {
         axios.get(posts).then(function(response) {
-          var contents = JSON.parse(fs.readFileSync('./test/fixtures/posts.json'))
-          assert.deepEqual(contents.data, response.data)
-          done()
+          getContents(path, response.config).then(function(contents) {
+            assert.deepEqual(contents.originalResponseData.data, response.data)
+            done()
+          })
         })
       })
     })
 
     it('works with nested folders', function(done) {
-      var cassettePath = './test/fixtures/reddit/r/posts.json'
+      var cassettePath = './test/fixtures/nested/posts.json'
       VCR.useCassette(cassettePath, function () {
         axios.get(posts).then(function(response) {
-          var contents = JSON.parse(fs.readFileSync(cassettePath))
-          assert.deepEqual(contents.data, response.data)
-          done()
-        }).catch(function(err) { console.log(err); done() })
+          getContents(cassettePath, response.config).then(function(contents) {
+            assert.deepEqual(contents.originalResponseData.data, response.data)
+            done()
+          })
+        }).catch(function(err) { console.log(err) })
       })
     })
 
@@ -49,13 +60,12 @@ describe('Axios VCR', function() {
       var cassettePath = './test/fixtures/posts.json'
       VCR.useCassette(cassettePath, function () {
         axios.get(posts).then(function(response) {
-          var contents = JSON.parse(fs.readFileSync(cassettePath))
-
-          assert.deepEqual(contents.headers, response.headers)
-          assert.equal(contents.status, response.status)
-          assert.equal(contents.statusText, response.statusText)
-
-          done()
+          getContents(cassettePath, response.config).then(function(contents) {
+            assert.deepEqual(contents.originalResponseData.headers, response.headers)
+            assert.equal(contents.originalResponseData.status, response.status)
+            assert.equal(contents.originalResponseData.statusText, response.statusText)
+            done()
+          })
         })
       })
     })
@@ -72,12 +82,15 @@ describe('Axios VCR', function() {
       var path = './test/static_fixtures/posts.json'
       assert(fileExists(path))
 
+      var url = 'http://something.com/unexisting'
+
       VCR.useCassette(path, function () {
-        axios.get('http://something.com/unexisting').then(function(response) {
-          var contents = JSON.parse(fs.readFileSync(path))
-          assert.deepEqual(response.data, contents.data)
-          done()
-        }).catch(function(e) { console.error(e); done(); })
+        axios.get(url).then(function(res) {
+          getContents(path, res.config).then(function(contents) {
+            assert.deepEqual(contents.originalResponseData, res)
+            done()
+          })
+        })
       })
     })
 

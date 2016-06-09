@@ -28,25 +28,4 @@ describe('Digest', function() {
     assert.notEqual(fullDigest, expectedDigest)
     assert.equal(testDigest(sampleConfig), expectedDigest)
   })
-
-  it('includes a custom User-Agent when not provided', function() {
-    // This is done like this because Axios injects a custom User-Agent in
-    // the request config if it hasn't been defined by the client.
-    //
-    // We need to do the same thing and inject our own so Axios doesn't modify
-    // the request config object at a later point (which breaks our logic because
-    // digests will be different at request and response times)
-
-    var sampleConfig = {
-      url: 'bla',
-      method: 'get',
-      data: {},
-      headers: {}
-    }
-
-    assert.notEqual(digest(sampleConfig), testDigest(sampleConfig))
-
-    sampleConfig.headers['User-Agent'] = 'axios-vcr'
-    assert.equal(digest(sampleConfig), testDigest(sampleConfig))
-  })
 })
