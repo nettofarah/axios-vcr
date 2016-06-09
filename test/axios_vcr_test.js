@@ -15,7 +15,7 @@ function fileExists(path) {
   }
 }
 
-function getContents(cassettePath, config) {
+function getFixture(cassettePath, config) {
   var loadAt = require('../lib/jsonDb').loadAt
   var digest = require('../lib/digest')
   var key = digest(config)
@@ -24,7 +24,7 @@ function getContents(cassettePath, config) {
 }
 
 describe('Axios VCR', function() {
-  this.timeout(5000)
+  this.timeout(10000)
   var posts = 'http://jsonplaceholder.typicode.com/posts/1'
   var axios = require('axios')
 
@@ -36,8 +36,8 @@ describe('Axios VCR', function() {
       var path = './test/fixtures/posts.json'
       VCR.useCassette(path, function () {
         axios.get(posts).then(function(response) {
-          getContents(path, response.config).then(function(contents) {
-            assert.deepEqual(contents.originalResponseData.data, response.data)
+          getFixture(path, response.config).then(function(fixture) {
+            assert.deepEqual(fixture.originalResponseData.data, response.data)
             done()
           })
         })
@@ -48,8 +48,8 @@ describe('Axios VCR', function() {
       var cassettePath = './test/fixtures/nested/posts.json'
       VCR.useCassette(cassettePath, function () {
         axios.get(posts).then(function(response) {
-          getContents(cassettePath, response.config).then(function(contents) {
-            assert.deepEqual(contents.originalResponseData.data, response.data)
+          getFixture(cassettePath, response.config).then(function(fixture) {
+            assert.deepEqual(fixture.originalResponseData.data, response.data)
             done()
           })
         }).catch(function(err) { console.log(err) })
@@ -60,10 +60,10 @@ describe('Axios VCR', function() {
       var cassettePath = './test/fixtures/posts.json'
       VCR.useCassette(cassettePath, function () {
         axios.get(posts).then(function(response) {
-          getContents(cassettePath, response.config).then(function(contents) {
-            assert.deepEqual(contents.originalResponseData.headers, response.headers)
-            assert.equal(contents.originalResponseData.status, response.status)
-            assert.equal(contents.originalResponseData.statusText, response.statusText)
+          getFixture(cassettePath, response.config).then(function(fixture) {
+            assert.deepEqual(fixture.originalResponseData.headers, response.headers)
+            assert.equal(fixture.originalResponseData.status, response.status)
+            assert.equal(fixture.originalResponseData.statusText, response.statusText)
             done()
           })
         })
@@ -86,8 +86,8 @@ describe('Axios VCR', function() {
 
       VCR.useCassette(path, function () {
         axios.get(url).then(function(res) {
-          getContents(path, res.config).then(function(contents) {
-            assert.deepEqual(contents.originalResponseData, res)
+          getFixture(path, res.config).then(function(fixture) {
+            assert.deepEqual(fixture.originalResponseData, res)
             done()
           })
         })
@@ -108,6 +108,39 @@ describe('Axios VCR', function() {
           assert.equal(200, response.status)
           fs.unlinkSync(path)
           done()
+        })
+      })
+    })
+  })
+
+  describe('Multiple Requests', function() {
+    this.timeout(15000)
+
+    beforeEach(clearFixtures)
+    afterEach(clearFixtures)
+
+    var usersUrl = 'http://jsonplaceholder.typicode.com/users'
+    var todosUrl = 'http://jsonplaceholder.typicode.com/todos'
+
+    it('stores multiple requests in the same cassette', function(done) {
+      var path = './test/fixtures/multiple.json'
+
+      VCR.useCassette(path, function() {
+        var usersPromise = axios.get(usersUrl)
+        var todosPromise = axios.get(todosUrl)
+
+        Promise.all([usersPromise, todosPromise]).then(function(responses) {
+          var usersResponse = responses[0]
+          var todosResponse = responses[1]
+
+          var usersResponsePromise = getFixture(path, usersResponse.config)
+          var todosResponsePromise = getFixture(path, todosResponse.config)
+
+          Promise.all([usersResponsePromise, todosResponsePromise]).then(function(fixtures) {
+            assert.deepEqual(fixtures[0].originalResponseData.data, usersResponse.data)
+            assert.deepEqual(fixtures[1].originalResponseData.data, todosResponse.data)
+            done()
+          })
         })
       })
     })
