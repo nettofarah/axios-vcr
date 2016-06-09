@@ -106,6 +106,7 @@ describe('Axios VCR', function() {
       VCR.useCassette(path, function () {
         axios.get(posts).then(function(response) {
           assert.equal(200, response.status)
+          fs.unlinkSync(path)
           done()
         })
       })
