@@ -25,7 +25,7 @@ axiosVCR.useCassette('./test/fixtures/cats.json', () => {
   axios.get('https://reddit.com/r/cats.json').then(response => {
     // axios-vcr will store the remote response from /cats.json
     // in ./test/fixtures/cats.json
-    // Subsequent requests will then load the response from ./test/fixtures/cats.json
+    // Subsequent requests will then load the response directly from the file system
   })
 })
 ```
