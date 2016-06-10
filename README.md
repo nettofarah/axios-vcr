@@ -12,7 +12,7 @@ Use it for reliable, fast and more deterministic tests.
 
 ## Installation
 ```bash
-npm install --save-dev axios-vcr
+$ npm install --save-dev axios-vcr
 ```
 
 ## Usage
