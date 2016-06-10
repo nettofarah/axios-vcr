@@ -32,13 +32,13 @@ axiosVCR.useCassette('./test/fixtures/cats.json', () => {
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/nettofarah/axios-vcr. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Code of Conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/nettofarah/axios-vcr. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Code of Conduct](https://github.com/nettofarah/axios-vcr/blob/master/CODE_OF_CONDUCT.md).
 
 To run the specs check out the repo and follow these steps:
 
 ```bash
 $ npm install
-$ npm run test
+$ npm test
 ```
 
 ## License
