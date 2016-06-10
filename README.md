@@ -9,7 +9,6 @@ Use it for reliable, fast and more deterministic tests.
 - Record http requests to JSON cassette files
 - Replay requests from cassete files
 - Multiple request/response fixtures per cassette
-- 
 
 ## Installation
 ```bash
