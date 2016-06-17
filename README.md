@@ -1,14 +1,18 @@
 # axios-vcr
-[![Build Status](https://travis-ci.org/nettofarah/axios-vcr.svg?branch=master)](https://travis-ci.org/nettofarah/axios-vcr)
+:vhs: Record and Replay requests in JavaScript
 
 axios-vcr is a set of [axios](https://github.com/mzabriskie/axios) middlewares that allow you to record and replay axios requests.
-
 Use it for reliable, fast and more deterministic tests.
 
+[![Build Status](https://travis-ci.org/nettofarah/axios-vcr.svg?branch=master)](https://travis-ci.org/nettofarah/axios-vcr)
+
 ## Features
-- Record http requests to JSON cassette files
-- Replay requests from cassete files
-- Multiple request/response fixtures per cassette
+- [x] Record http requests to JSON cassette files
+- [x] Replay requests from cassete files
+- [x] Multiple request/response fixtures per cassette
+- [ ] Cassette expiration logic
+- [ ] Mocha integration
+- [ ] non-global axios instances support
 
 ## Installation
 ```bash
