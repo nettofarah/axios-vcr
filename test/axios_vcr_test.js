@@ -2,6 +2,7 @@ var fs = require('fs')
 var rimraf = require('rimraf')
 var assert = require('assert')
 var VCR = require('../index')
+var _ = require('lodash')
 
 function clearFixtures() {
   rimraf.sync('./test/fixtures')
@@ -87,9 +88,9 @@ describe('Axios VCR', function() {
       VCR.useCassette(path, function () {
         axios.get(url).then(function(res) {
           getFixture(path, res.config).then(function(fixture) {
-            assert.deepEqual(fixture.originalResponseData, res)
+            assert.deepEqual(fixture.originalResponseData, _.omit(res, 'fixture'))
             done()
-          })
+          }).catch(err => { console.log(err); done() })
         })
       })
     })
