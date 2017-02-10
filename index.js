@@ -1,7 +1,7 @@
 var RequestMiddleware = require('./lib/RequestMiddleware');
 var ResponseMiddleware = require('./lib/ResponseMiddleware');
 
-function useCassette(cassettePath, cb) {
+function mountCassette(cassettePath, cb) {
   var axios = require('axios');
 
   var responseInterceptor = axios.interceptors.response.use(
@@ -21,7 +21,7 @@ function useCassette(cassettePath, cb) {
 }
 
 module.exports = {
-  useCassette: useCassette,
+  mountCassette: mountCassette,
   RequestMiddleware: RequestMiddleware,
   ResponseMiddleware: ResponseMiddleware
 }

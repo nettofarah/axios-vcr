@@ -35,7 +35,7 @@ describe('Axios VCR', function() {
 
     it('generates stubs for requests', function(done) {
       var path = './test/fixtures/posts.json'
-      VCR.useCassette(path, function () {
+      VCR.mountCassette(path, function () {
         axios.get(posts).then(function(response) {
           getFixture(path, response.config).then(function(fixture) {
             assert.deepEqual(fixture.originalResponseData.data, response.data)
@@ -47,7 +47,7 @@ describe('Axios VCR', function() {
 
     it('works with nested folders', function(done) {
       var cassettePath = './test/fixtures/nested/posts.json'
-      VCR.useCassette(cassettePath, function () {
+      VCR.mountCassette(cassettePath, function () {
         axios.get(posts).then(function(response) {
           getFixture(cassettePath, response.config).then(function(fixture) {
             assert.deepEqual(fixture.originalResponseData.data, response.data)
@@ -59,7 +59,7 @@ describe('Axios VCR', function() {
 
     it('stores headers and status', function(done) {
       var cassettePath = './test/fixtures/posts.json'
-      VCR.useCassette(cassettePath, function () {
+      VCR.mountCassette(cassettePath, function () {
         axios.get(posts).then(function(response) {
           getFixture(cassettePath, response.config).then(function(fixture) {
             assert.deepEqual(fixture.originalResponseData.headers, response.headers)
@@ -85,7 +85,7 @@ describe('Axios VCR', function() {
 
       var url = 'http://something.com/unexisting'
 
-      VCR.useCassette(path, function () {
+      VCR.mountCassette(path, function () {
         axios.get(url).then(function(res) {
           getFixture(path, res.config).then(function(fixture) {
             assert.deepEqual(fixture.originalResponseData, _.omit(res, 'fixture'))
@@ -104,7 +104,7 @@ describe('Axios VCR', function() {
 
       assert(!fileExists(path))
 
-      VCR.useCassette(path, function () {
+      VCR.mountCassette(path, function () {
         axios.get(posts).then(function(response) {
           assert.equal(200, response.status)
           fs.unlinkSync(path)
@@ -126,7 +126,7 @@ describe('Axios VCR', function() {
     it('stores multiple requests in the same cassette', function(done) {
       var path = './test/fixtures/multiple.json'
 
-      VCR.useCassette(path, function() {
+      VCR.mountCassette(path, function() {
         var usersPromise = axios.get(usersUrl)
         var todosPromise = axios.get(todosUrl)
 
