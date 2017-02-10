@@ -25,11 +25,29 @@ Using axios-vcr is very simple. All you need to do is to provide a cassette path
 ```javascript
 var axiosVCR = require('axios-vcr');
 
-axiosVCR.mountCassette('./test/fixtures/cats.json', () => {
-  axios.get('https://reddit.com/r/cats.json').then(response => {
-    // axios-vcr will store the remote response from /cats.json
-    // in ./test/fixtures/cats.json
-    // Subsequent requests will then load the response directly from the file system
+axiosVCR.mountCassette('./test/fixtures/cats.json')
+
+axios.get('https://reddit.com/r/cats.json').then(response => {
+  // axios-vcr will store the remote response from /cats.json
+  // in ./test/fixtures/cats.json
+  // Subsequent requests will then load the response directly from the file system
+
+  VCR.ejectCassette('https://reddit.com/r/cats.json')
+})
+```
+
+### Usage in a test case
+```javascript
+it('makes your requests load faster and more reliably', function(done) {
+  // mount a cassette
+  axiosVCR.mountCassette('./fixtures/test_case_name.json')
+
+  myAPI.fetchSomethingFromRemote().then(function(response) {
+    assert.equal(response.something, 'some value')
+    done()
+
+    // Eject the cassette when all your promises have been fulfilled
+    axiosVCR.ejectCassette('./fixture/test_case_name.json')
   })
 })
 ```

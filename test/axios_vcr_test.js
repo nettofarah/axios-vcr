@@ -35,38 +35,43 @@ describe('Axios VCR', function() {
 
     it('generates stubs for requests', function(done) {
       var path = './test/fixtures/posts.json'
-      VCR.mountCassette(path, function () {
-        axios.get(posts).then(function(response) {
-          getFixture(path, response.config).then(function(fixture) {
-            assert.deepEqual(fixture.originalResponseData.data, response.data)
-            done()
-          })
+      VCR.mountCassette(path)
+
+      axios.get(posts).then(function(response) {
+        getFixture(path, response.config).then(function(fixture) {
+          assert.deepEqual(fixture.originalResponseData.data, response.data)
+          done()
+          VCR.ejectCassette(path)
         })
       })
     })
 
     it('works with nested folders', function(done) {
       var cassettePath = './test/fixtures/nested/posts.json'
-      VCR.mountCassette(cassettePath, function () {
-        axios.get(posts).then(function(response) {
-          getFixture(cassettePath, response.config).then(function(fixture) {
-            assert.deepEqual(fixture.originalResponseData.data, response.data)
-            done()
-          })
-        }).catch(function(err) { console.log(err) })
-      })
+      VCR.mountCassette(cassettePath)
+
+      axios.get(posts).then(function(response) {
+        getFixture(cassettePath, response.config).then(function(fixture) {
+          assert.deepEqual(fixture.originalResponseData.data, response.data)
+          done()
+
+          VCR.ejectCassette(cassettePath)
+        })
+      }).catch(function(err) { console.log(err) })
     })
 
     it('stores headers and status', function(done) {
       var cassettePath = './test/fixtures/posts.json'
-      VCR.mountCassette(cassettePath, function () {
-        axios.get(posts).then(function(response) {
-          getFixture(cassettePath, response.config).then(function(fixture) {
-            assert.deepEqual(fixture.originalResponseData.headers, response.headers)
-            assert.equal(fixture.originalResponseData.status, response.status)
-            assert.equal(fixture.originalResponseData.statusText, response.statusText)
-            done()
-          })
+      VCR.mountCassette(cassettePath)
+
+      axios.get(posts).then(function(response) {
+        getFixture(cassettePath, response.config).then(function(fixture) {
+          assert.deepEqual(fixture.originalResponseData.headers, response.headers)
+          assert.equal(fixture.originalResponseData.status, response.status)
+          assert.equal(fixture.originalResponseData.statusText, response.statusText)
+          done()
+
+          VCR.ejectCassette(cassettePath)
         })
       })
     })
@@ -84,14 +89,15 @@ describe('Axios VCR', function() {
       assert(fileExists(path))
 
       var url = 'http://something.com/unexisting'
+      VCR.mountCassette(path)
 
-      VCR.mountCassette(path, function () {
-        axios.get(url).then(function(res) {
-          getFixture(path, res.config).then(function(fixture) {
-            assert.deepEqual(fixture.originalResponseData, _.omit(res, 'fixture'))
-            done()
-          }).catch(err => { console.log(err); done() })
-        })
+      axios.get(url).then(function(res) {
+        getFixture(path, res.config).then(function(fixture) {
+          assert.deepEqual(fixture.originalResponseData, _.omit(res, 'fixture'))
+          done()
+
+          VCR.ejectCassette(path)
+        }).catch(err => { console.log(err); done() })
       })
     })
 
@@ -103,13 +109,14 @@ describe('Axios VCR', function() {
       } catch(e) {}
 
       assert(!fileExists(path))
+      VCR.mountCassette(path)
 
-      VCR.mountCassette(path, function () {
-        axios.get(posts).then(function(response) {
-          assert.equal(200, response.status)
-          fs.unlinkSync(path)
-          done()
-        })
+      axios.get(posts).then(function(response) {
+        assert.equal(200, response.status)
+        fs.unlinkSync(path)
+        done()
+
+        VCR.ejectCassette(path)
       })
     })
   })
@@ -126,22 +133,24 @@ describe('Axios VCR', function() {
     it('stores multiple requests in the same cassette', function(done) {
       var path = './test/fixtures/multiple.json'
 
-      VCR.mountCassette(path, function() {
-        var usersPromise = axios.get(usersUrl)
-        var todosPromise = axios.get(todosUrl)
+      VCR.mountCassette(path)
 
-        Promise.all([usersPromise, todosPromise]).then(function(responses) {
-          var usersResponse = responses[0]
-          var todosResponse = responses[1]
+      var usersPromise = axios.get(usersUrl)
+      var todosPromise = axios.get(todosUrl)
 
-          var usersResponsePromise = getFixture(path, usersResponse.config)
-          var todosResponsePromise = getFixture(path, todosResponse.config)
+      Promise.all([usersPromise, todosPromise]).then(function(responses) {
+        var usersResponse = responses[0]
+        var todosResponse = responses[1]
 
-          Promise.all([usersResponsePromise, todosResponsePromise]).then(function(fixtures) {
-            assert.deepEqual(fixtures[0].originalResponseData.data, usersResponse.data)
-            assert.deepEqual(fixtures[1].originalResponseData.data, todosResponse.data)
-            done()
-          })
+        var usersResponsePromise = getFixture(path, usersResponse.config)
+        var todosResponsePromise = getFixture(path, todosResponse.config)
+
+        Promise.all([usersResponsePromise, todosResponsePromise]).then(function(fixtures) {
+          assert.deepEqual(fixtures[0].originalResponseData.data, usersResponse.data)
+          assert.deepEqual(fixtures[1].originalResponseData.data, todosResponse.data)
+          done()
+
+          VCR.ejectCassette(path)
         })
       })
     })
