@@ -3,8 +3,12 @@ var ResponseMiddleware = require('./lib/ResponseMiddleware');
 
 var cassettes = {}
 
-function mountCassette(cassettePath) {
-  var axios = require('axios');
+function mountCassette(cassettePath, options = {}) {
+  var defaults = {
+    instance: require('axios')
+  }
+  options = Object.assign(defaults, options);
+  var axios = options.instance;
 
   var responseInterceptor = axios.interceptors.response.use(
     ResponseMiddleware.success(cassettePath),
