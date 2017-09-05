@@ -1,6 +1,6 @@
 var jsonDB = require('../lib/jsonDb')
 var assert = require('assert')
-var fs = require('fs-promise')
+var fs = require('fs-extra')
 var rimraf = require('rimraf')
 
 function clearFixtures() {
