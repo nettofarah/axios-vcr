@@ -97,7 +97,7 @@ describe('Axios VCR', function() {
           done()
 
           VCR.ejectCassette(path)
-        }).catch(err => { console.log(err); done() })
+        })
       })
     })
 
