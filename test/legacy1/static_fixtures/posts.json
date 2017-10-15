@@ -1,0 +1,46 @@
+{
+  "2dff074369933923c30f9c868cf65f79": {
+    "meta": {
+      "url": "http://something.com/unexisting",
+      "method": "get",
+      "headers": {
+        "common": { "Accept": "application/json, text/plain, */*" },
+        "patch": { "Content-Type": "application/x-www-form-urlencoded" },
+        "post": { "Content-Type": "application/x-www-form-urlencoded" },
+        "put": { "Content-Type": "application/x-www-form-urlencoded" }
+      }
+    },
+    "fixture": true,
+    "originalResponseData": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "server": "Cowboy",
+        "connection": "close",
+        "x-powered-by": "Express",
+        "vary": "Origin, Accept-Encoding",
+        "access-control-allow-credentials": "true",
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "expires": "-1",
+        "x-content-type-options": "nosniff",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "292",
+        "etag": "W/\"124-yv65LoT2uMHrpn06wNpAcQ\"",
+        "date": "Thu, 09 Jun 2016 08:53:20 GMT",
+        "via": "1.1 vegur"
+      },
+      "data": "bla",
+      "config": {
+        "url": "http://something.com/unexisting",
+        "method": "get",
+        "headers": {
+          "common": { "Accept": "application/json, text/plain, */*" },
+          "patch": { "Content-Type": "application/x-www-form-urlencoded" },
+          "post": { "Content-Type": "application/x-www-form-urlencoded" },
+          "put": { "Content-Type": "application/x-www-form-urlencoded" }
+        }
+      }
+    }
+  }
+}

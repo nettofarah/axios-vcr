@@ -1,0 +1,40 @@
+{
+  "56e7cedef2202ac3a46947b52d90a2d6": {
+    "meta": {
+      "url": "http://something.com/unexisting",
+      "method": "get",
+      "headers": {
+        "Accept": "application/json, text/plain, */*"
+      }
+    },
+    "fixture": true,
+    "originalResponseData": {
+      "status": 200,
+      "statusText": "OK",
+      "headers": {
+        "server": "Cowboy",
+        "connection": "close",
+        "x-powered-by": "Express",
+        "vary": "Origin, Accept-Encoding",
+        "access-control-allow-credentials": "true",
+        "cache-control": "no-cache",
+        "pragma": "no-cache",
+        "expires": "-1",
+        "x-content-type-options": "nosniff",
+        "content-type": "application/json; charset=utf-8",
+        "content-length": "292",
+        "etag": "W/\"124-yv65LoT2uMHrpn06wNpAcQ\"",
+        "date": "Thu, 09 Jun 2016 08:53:20 GMT",
+        "via": "1.1 vegur"
+      },
+      "data": "bla",
+      "config": {
+        "url": "http://something.com/unexisting",
+        "method": "get",
+        "headers": {
+          "Accept": "application/json, text/plain, */*"
+        }  
+      }
+    }
+  }
+}
