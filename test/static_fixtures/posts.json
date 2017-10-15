@@ -1,11 +1,24 @@
 {
-  "b6871a2fdb4eac91aee1b61c76a9728f": {
+  "b1fa84fac515ab4c9f6965381976e6e7": {
     "meta": {
       "url": "http://something.com/unexisting",
       "method": "get",
       "headers": {
-        "Accept": "application/json, text/plain, */*",
-        "User-Agent": "axios-vcr"
+        "common": {
+          "Accept": "application/json, text/plain, */*"
+        },
+        "delete": {},
+        "get": {},
+        "head": {},
+        "post": {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "put": {
+          "Content-Type": "application/x-www-form-urlencoded"
+        },
+        "patch": {
+          "Content-Type": "application/x-www-form-urlencoded"
+        }
       }
     },
     "fixture": true,
@@ -33,14 +46,21 @@
         "url": "http://something.com/unexisting",
         "method": "get",
         "headers": {
-          "common": { "Accept": "application/json, text/plain, */*" },
+          "common": {
+            "Accept": "application/json, text/plain, */*"
+          },
           "delete": {},
           "get": {},
           "head": {},
-          "post": { "Content-Type": "application/x-www-form-urlencoded" },
-          "put": { "Content-Type": "application/x-www-form-urlencoded" },
-          "patch": { "Content-Type": "application/x-www-form-urlencoded" },
-          "User-Agent": "axios-vcr"
+          "post": {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          "put": {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          "patch": {
+            "Content-Type": "application/x-www-form-urlencoded"
+          }
         }
       }
     }
