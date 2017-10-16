@@ -1,24 +1,13 @@
 {
-  "b1fa84fac515ab4c9f6965381976e6e7": {
+  "2dff074369933923c30f9c868cf65f79": {
     "meta": {
       "url": "http://something.com/unexisting",
       "method": "get",
       "headers": {
-        "common": {
-          "Accept": "application/json, text/plain, */*"
-        },
-        "delete": {},
-        "get": {},
-        "head": {},
-        "post": {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        "put": {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        "patch": {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
+        "common": { "Accept": "application/json, text/plain, */*" },
+        "patch": { "Content-Type": "application/x-www-form-urlencoded" },
+        "post": { "Content-Type": "application/x-www-form-urlencoded" },
+        "put": { "Content-Type": "application/x-www-form-urlencoded" }
       }
     },
     "fixture": true,
@@ -46,21 +35,10 @@
         "url": "http://something.com/unexisting",
         "method": "get",
         "headers": {
-          "common": {
-            "Accept": "application/json, text/plain, */*"
-          },
-          "delete": {},
-          "get": {},
-          "head": {},
-          "post": {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          "put": {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          "patch": {
-            "Content-Type": "application/x-www-form-urlencoded"
-          }
+          "common": { "Accept": "application/json, text/plain, */*" },
+          "patch": { "Content-Type": "application/x-www-form-urlencoded" },
+          "post": { "Content-Type": "application/x-www-form-urlencoded" },
+          "put": { "Content-Type": "application/x-www-form-urlencoded" }
         }
       }
     }

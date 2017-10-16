@@ -1,3 +1,8 @@
 language: node_js
 node_js:
-  - "5"
+  - "4"
+  - "6"
+  - "8"
+before_install:
+  - npm i -g npm@5
+script: npx tav

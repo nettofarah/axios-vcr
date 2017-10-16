@@ -1,4 +1,5 @@
 var fs = require('fs')
+var path = require('path')
 var rimraf = require('rimraf')
 var assert = require('assert')
 var VCR = require('../index')
@@ -8,9 +9,9 @@ function clearFixtures() {
   rimraf.sync('./test/fixtures')
 }
 
-function fileExists(path) {
+function fileExists(cassettePath) {
   try {
-    return fs.statSync(path).isFile()
+    return fs.statSync(cassettePath).isFile()
   } catch(e) {
     return false
   }
@@ -34,14 +35,14 @@ describe('Axios VCR', function() {
     afterEach(clearFixtures)
 
     it('generates stubs for requests', function(done) {
-      var path = './test/fixtures/posts.json'
-      VCR.mountCassette(path)
+      var cassettePath = './test/fixtures/posts.json'
+      VCR.mountCassette(cassettePath)
 
       axios.get(posts).then(function(response) {
-        getFixture(path, response.config).then(function(fixture) {
+        getFixture(cassettePath, response.config).then(function(fixture) {
           assert.deepEqual(fixture.originalResponseData.data, response.data)
           done()
-          VCR.ejectCassette(path)
+          VCR.ejectCassette(cassettePath)
         })
       })
     })
@@ -85,38 +86,39 @@ describe('Axios VCR', function() {
       check that the response is the same as the cassette file.
     */
     it('skips remote calls', function(done) {
-      var path = './test/static_fixtures/posts.json'
-      assert(fileExists(path))
+      var fixturePrefix = process.env.FIXTURE_PREFIX || ''
+      var cassettePath = path.join('./test', fixturePrefix, 'static_fixtures', 'posts.json')
+      assert(fileExists(cassettePath))
 
       var url = 'http://something.com/unexisting'
-      VCR.mountCassette(path)
+      VCR.mountCassette(cassettePath)
 
       axios.get(url).then(function(res) {
-        getFixture(path, res.config).then(function(fixture) {
+        getFixture(cassettePath, res.config).then(function(fixture) {
           assert.deepEqual(fixture.originalResponseData, _.omit(res, 'fixture'))
           done()
 
-          VCR.ejectCassette(path)
+          VCR.ejectCassette(cassettePath)
         }).catch(err => { console.log(err); done() })
       })
     })
 
     it('makes remote call when a cassette is not available', function(done) {
-      var path = './test/static_fixtures/no_posts.json'
+      var cassettePath = './test/static_fixtures/no_posts.json'
 
       try {
-        fs.unlinkSync(path)
+        fs.unlinkSync(cassettePath)
       } catch(e) {}
 
-      assert(!fileExists(path))
-      VCR.mountCassette(path)
+      assert(!fileExists(cassettePath))
+      VCR.mountCassette(cassettePath)
 
       axios.get(posts).then(function(response) {
         assert.equal(200, response.status)
-        fs.unlinkSync(path)
+        fs.unlinkSync(cassettePath)
         done()
 
-        VCR.ejectCassette(path)
+        VCR.ejectCassette(cassettePath)
       })
     })
   })
@@ -131,9 +133,9 @@ describe('Axios VCR', function() {
     var todosUrl = 'http://jsonplaceholder.typicode.com/todos'
 
     it('stores multiple requests in the same cassette', function(done) {
-      var path = './test/fixtures/multiple.json'
+      var cassettePath = './test/fixtures/multiple.json'
 
-      VCR.mountCassette(path)
+      VCR.mountCassette(cassettePath)
 
       var usersPromise = axios.get(usersUrl)
       var todosPromise = axios.get(todosUrl)
@@ -142,15 +144,15 @@ describe('Axios VCR', function() {
         var usersResponse = responses[0]
         var todosResponse = responses[1]
 
-        var usersResponsePromise = getFixture(path, usersResponse.config)
-        var todosResponsePromise = getFixture(path, todosResponse.config)
+        var usersResponsePromise = getFixture(cassettePath, usersResponse.config)
+        var todosResponsePromise = getFixture(cassettePath, todosResponse.config)
 
         Promise.all([usersResponsePromise, todosResponsePromise]).then(function(fixtures) {
           assert.deepEqual(fixtures[0].originalResponseData.data, usersResponse.data)
           assert.deepEqual(fixtures[1].originalResponseData.data, todosResponse.data)
           done()
 
-          VCR.ejectCassette(path)
+          VCR.ejectCassette(cassettePath)
         })
       })
     })

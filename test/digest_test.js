@@ -16,7 +16,6 @@ describe('Digest', function() {
       method: 'get',
       data: {},
       headers: {
-        'user-agent': 'test'
       },
       extraProperty: 'bla',
       somethingElse: 'irrelevant'

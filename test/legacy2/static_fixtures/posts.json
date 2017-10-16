@@ -1,24 +1,10 @@
 {
-  "b1fa84fac515ab4c9f6965381976e6e7": {
+  "56e7cedef2202ac3a46947b52d90a2d6": {
     "meta": {
       "url": "http://something.com/unexisting",
       "method": "get",
       "headers": {
-        "common": {
-          "Accept": "application/json, text/plain, */*"
-        },
-        "delete": {},
-        "get": {},
-        "head": {},
-        "post": {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        "put": {
-          "Content-Type": "application/x-www-form-urlencoded"
-        },
-        "patch": {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
+        "Accept": "application/json, text/plain, */*"
       }
     },
     "fixture": true,
@@ -46,22 +32,8 @@
         "url": "http://something.com/unexisting",
         "method": "get",
         "headers": {
-          "common": {
-            "Accept": "application/json, text/plain, */*"
-          },
-          "delete": {},
-          "get": {},
-          "head": {},
-          "post": {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          "put": {
-            "Content-Type": "application/x-www-form-urlencoded"
-          },
-          "patch": {
-            "Content-Type": "application/x-www-form-urlencoded"
-          }
-        }
+          "Accept": "application/json, text/plain, */*"
+        }  
       }
     }
   }

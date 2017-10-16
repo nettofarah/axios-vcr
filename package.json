@@ -15,9 +15,9 @@
     "url": "https://github.com/nettofarah/axios-vcr.git"
   },
   "files": [
-   "index.js",
-   "lib"
- ],
+    "index.js",
+    "lib"
+  ],
   "keywords": [
     "axios",
     "vcr",
@@ -28,14 +28,18 @@
   "author": "Netto Farah",
   "license": "MIT",
   "devDependencies": {
-    "axios": "^0.11.1",
-    "mocha": "^2.5.3",
-    "rimraf": "^2.5.2"
+    "axios": "^0.16.2",
+    "mocha": "^3.5.0",
+    "rimraf": "^2.5.2",
+    "test-all-versions": "^3.1.1"
   },
   "dependencies": {
-    "fs-promise": "^0.5.0",
+    "fs-extra": "^4.0.1",
     "lodash": "^4.13.1",
     "md5": "^2.1.0",
     "mkdirp": "^0.5.1"
+  },
+  "peerDependencies": {
+    "axios": ">= 0.11 < 1.0"
   }
 }

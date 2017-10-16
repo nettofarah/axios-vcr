@@ -1,0 +1,14 @@
+axios_1:
+  name: axios
+  versions: '> 0.15.2 < 1.0'
+  commands: node ./node_modules/.bin/mocha test/*
+
+axios_2:
+  name: axios
+  versions: '>= 0.13.0 < 0.15.2'
+  commands: FIXTURE_PREFIX=legacy1 node ./node_modules/.bin/mocha test/*
+
+axios_3:
+  name: axios
+  versions: '>= 0.11 < 0.13'
+  commands: FIXTURE_PREFIX=legacy2 node ./node_modules/.bin/mocha test/*
