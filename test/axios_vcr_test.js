@@ -98,7 +98,10 @@ describe('Axios VCR', function() {
 
           VCR.ejectCassette(path)
         }).catch(err => { console.log(err); done() })
-      })
+      }).catch((error) => {
+        console.log(error);
+        done();
+      });
     })
 
     it('makes remote call when a cassette is not available', function(done) {
