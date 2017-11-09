@@ -1,11 +1,10 @@
 {
-  "6d51a168265ddf1c33f60fa111a26dc7": {
+  "56e7cedef2202ac3a46947b52d90a2d6": {
     "meta": {
       "url": "http://something.com/unexisting",
       "method": "get",
       "headers": {
-        "Accept": "application/json, text/plain, */*",
-        "User-Agent": "axios-vcr"
+        "Accept": "application/json, text/plain, */*"
       }
     },
     "fixture": true,
@@ -33,8 +32,7 @@
         "url": "http://something.com/unexisting",
         "method": "get",
         "headers": {
-          "Accept": "application/json, text/plain, */*",
-          "User-Agent": "axios-vcr"
+          "Accept": "application/json, text/plain, */*"
         }
       }
     }

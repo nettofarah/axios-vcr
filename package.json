@@ -5,7 +5,8 @@
   "main": "index.js",
   "homepage": "http://github.com/nettofarah/axios-vcr",
   "scripts": {
-    "test": "mocha test/"
+    "test": "npm run lint && mocha test/",
+    "lint": "eslint test/ lib/"
   },
   "bugs": {
     "url": "https://github.com/nettofarah/axios-vcr/issues"
@@ -15,9 +16,9 @@
     "url": "https://github.com/nettofarah/axios-vcr.git"
   },
   "files": [
-   "index.js",
-   "lib"
- ],
+    "index.js",
+    "lib"
+  ],
   "keywords": [
     "axios",
     "vcr",
@@ -28,12 +29,17 @@
   "author": "Netto Farah",
   "license": "MIT",
   "devDependencies": {
-    "axios": "^0.11.1",
+    "axios": "^0.17.0",
+    "eslint": "^4.10.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.8.0",
     "mocha": "^2.5.3",
     "rimraf": "^2.5.2"
   },
+  "peerDependencies": {
+    "axios": "^0.17.0"
+  },
   "dependencies": {
-    "fs-promise": "^0.5.0",
     "lodash": "^4.13.1",
     "md5": "^2.1.0",
     "mkdirp": "^0.5.1"
