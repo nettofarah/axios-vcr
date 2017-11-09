@@ -1,31 +1,30 @@
-var digest = require('../lib/digest')
-var md5 = require('md5')
-var assert = require('assert')
-var _ = require('lodash')
+const digest = require('../lib/digest');
+const md5 = require('md5');
+const assert = require('assert');
+const _ = require('lodash');
 
 function testDigest(cfg) {
-  var config = _.pick(cfg, ['url', 'method', 'data', 'headers'])
-  return md5(JSON.stringify(config))
+  const config = _.pick(cfg, ['url', 'method', 'data', 'headers']);
+  return md5(JSON.stringify(config));
 }
 
-describe('Digest', function() {
-
-  it('md5s certain parameters from an axiosConfig object', function() {
-    var sampleConfig = {
+describe('Digest', () => {
+  it('md5s certain parameters from an axiosConfig object', () => {
+    const sampleConfig = {
       url: 'http://cats.com',
       method: 'get',
       data: {},
       headers: {
-        'user-agent': 'test'
+        'user-agent': 'test',
       },
       extraProperty: 'bla',
-      somethingElse: 'irrelevant'
-    }
+      somethingElse: 'irrelevant',
+    };
 
-    var fullDigest = md5(JSON.stringify(sampleConfig))
-    var expectedDigest = digest(sampleConfig)
+    const fullDigest = md5(JSON.stringify(sampleConfig));
+    const expectedDigest = digest(sampleConfig);
 
-    assert.notEqual(fullDigest, expectedDigest)
-    assert.equal(testDigest(sampleConfig), expectedDigest)
-  })
-})
+    assert.notEqual(fullDigest, expectedDigest);
+    assert.equal(testDigest(sampleConfig), expectedDigest);
+  });
+});
