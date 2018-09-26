@@ -28,7 +28,7 @@
   "author": "Netto Farah",
   "license": "MIT",
   "devDependencies": {
-    "axios": "^0.11.1",
+    "axios": "^0.18.0",
     "mocha": "^2.5.3",
     "rimraf": "^2.5.2"
   },

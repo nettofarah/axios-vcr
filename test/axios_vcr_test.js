@@ -38,12 +38,12 @@ describe('Axios VCR', function() {
       VCR.mountCassette(path)
 
       axios.get(posts).then(function(response) {
-        getFixture(path, response.config).then(function(fixture) {
+        return getFixture(path, response.config).then(function(fixture) {
           assert.deepEqual(fixture.originalResponseData.data, response.data)
           done()
           VCR.ejectCassette(path)
         })
-      })
+      }).catch(function(err) { console.log(err); done() })
     })
 
     it('works with nested folders', function(done) {
@@ -51,13 +51,13 @@ describe('Axios VCR', function() {
       VCR.mountCassette(cassettePath)
 
       axios.get(posts).then(function(response) {
-        getFixture(cassettePath, response.config).then(function(fixture) {
+        return getFixture(cassettePath, response.config).then(function(fixture) {
           assert.deepEqual(fixture.originalResponseData.data, response.data)
           done()
 
           VCR.ejectCassette(cassettePath)
         })
-      }).catch(function(err) { console.log(err) })
+      }).catch(function(err) { console.log(err); done() })
     })
 
     it('stores headers and status', function(done) {
@@ -65,7 +65,7 @@ describe('Axios VCR', function() {
       VCR.mountCassette(cassettePath)
 
       axios.get(posts).then(function(response) {
-        getFixture(cassettePath, response.config).then(function(fixture) {
+        return getFixture(cassettePath, response.config).then(function(fixture) {
           assert.deepEqual(fixture.originalResponseData.headers, response.headers)
           assert.equal(fixture.originalResponseData.status, response.status)
           assert.equal(fixture.originalResponseData.statusText, response.statusText)
@@ -73,7 +73,7 @@ describe('Axios VCR', function() {
 
           VCR.ejectCassette(cassettePath)
         })
-      })
+      }).catch(function(err) { console.log(err); done() })
     })
   })
 
@@ -92,7 +92,7 @@ describe('Axios VCR', function() {
       VCR.mountCassette(path)
 
       axios.get(url).then(function(res) {
-        getFixture(path, res.config).then(function(fixture) {
+        return getFixture(path, res.config).then(function(fixture) {
           assert.deepEqual(fixture.originalResponseData, _.omit(res, 'fixture'))
           done()
 
@@ -117,7 +117,7 @@ describe('Axios VCR', function() {
         done()
 
         VCR.ejectCassette(path)
-      })
+      }).catch(err => { console.log(err); done() })
     })
   })
 
@@ -145,14 +145,14 @@ describe('Axios VCR', function() {
         var usersResponsePromise = getFixture(path, usersResponse.config)
         var todosResponsePromise = getFixture(path, todosResponse.config)
 
-        Promise.all([usersResponsePromise, todosResponsePromise]).then(function(fixtures) {
+        return Promise.all([usersResponsePromise, todosResponsePromise]).then(function(fixtures) {
           assert.deepEqual(fixtures[0].originalResponseData.data, usersResponse.data)
           assert.deepEqual(fixtures[1].originalResponseData.data, todosResponse.data)
           done()
 
           VCR.ejectCassette(path)
         })
-      })
+      }).catch(err => { console.log(err); done() })
     })
   })
 })
