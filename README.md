@@ -20,10 +20,10 @@ $ npm install --save-dev axios-vcr
 ```
 
 ## Usage
-Using axios-vcr is very simple. All you need to do is to provide a cassette path and wrap your axios code in a `VCR.use` call.
+Using axios-vcr is very simple. All you need to do is to provide a cassette path and wrap your axios code with `axiosVCR.mountCassette` and `axiosVCR.ejectCassette`.
 
 ```javascript
-var axiosVCR = require('axios-vcr');
+const axiosVCR = require('axios-vcr');
 
 axiosVCR.mountCassette('./test/fixtures/cats.json')
 
@@ -32,7 +32,7 @@ axios.get('https://reddit.com/r/cats.json').then(response => {
   // in ./test/fixtures/cats.json
   // Subsequent requests will then load the response directly from the file system
 
-  VCR.ejectCassette('https://reddit.com/r/cats.json')
+  axiosVCR.ejectCassette('https://reddit.com/r/cats.json')
 })
 ```
 
