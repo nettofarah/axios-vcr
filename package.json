@@ -1,6 +1,6 @@
 {
   "name": "axios-vcr",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "axios-vcr is a set of middlewares for axios that allow you to record and replay requests.",
   "main": "index.js",
   "homepage": "http://github.com/nettofarah/axios-vcr",
@@ -15,9 +15,9 @@
     "url": "https://github.com/nettofarah/axios-vcr.git"
   },
   "files": [
-   "index.js",
-   "lib"
- ],
+    "index.js",
+    "lib"
+  ],
   "keywords": [
     "axios",
     "vcr",
@@ -28,8 +28,8 @@
   "author": "Netto Farah",
   "license": "MIT",
   "devDependencies": {
-    "axios": "^0.11.1",
-    "mocha": "^2.5.3",
+    "axios": "^0.19.0",
+    "mocha": "^6.2.0",
     "rimraf": "^2.5.2"
   },
   "dependencies": {
