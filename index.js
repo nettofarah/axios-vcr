@@ -3,8 +3,13 @@ const ResponseMiddleware = require('./lib/ResponseMiddleware');
 
 const cassettes = {}
 
-function mountCassette(cassettePath) {
-  const axios = require('axios');
+function mountCassette(cassettePath, client) {
+  let axios = null;
+  if ( client == null ) {
+    axios = require('axios');
+  } else {
+    axios = client;
+  }
 
   let responseInterceptor = axios.interceptors.response.use(
     ResponseMiddleware.success(cassettePath),
