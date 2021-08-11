@@ -33,7 +33,7 @@
     "rimraf": "^2.5.2"
   },
   "dependencies": {
-    "fs-promise": "^0.5.0",
+    "fs-extra": "^3.0.0",
     "lodash": "^4.13.1",
     "md5": "^2.1.0",
     "mkdirp": "^0.5.1"
